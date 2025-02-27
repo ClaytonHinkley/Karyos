@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>هدية خاصة لكِ ❤️</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Cairo', sans-serif;
+            background: linear-gradient(135deg, #ff758c, #ff7eb3);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            overflow: hidden;
+            position: relative;
+        }
+
+        /* خلفية متحركة مع تموج */
+        .background {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('https://www.transparenttextures.com/patterns/starfield.png');
+            animation: moveBackground 30s linear infinite, ripple 10s infinite;
+            z-index: -1;
+        }
+
+        @keyframes moveBackground {
+            from {
+                background-position: 0 0;
+            }
+            to {
+                background-position: 200% 200%;
+            }
+        }
+
+        @keyframes ripple {
+            0% {
+                transform: scale(1);
+                opacity: 0.8;
+            }
+            50% {
+                transform: scale(1.1);
+                opacity: 1;
+            }
+            100% {
+                transform: scale(1);
+                opacity: 0.8;
+            }
+        }
+
+        .container {
+            text-align: center;
+            background: rgba(255, 255, 255, 0.95);
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
+            animation: fadeIn 2s ease-in-out;
+            position: relative;
+            z-index: 1;
+            max-width: 90%;
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+
+        /* مستطيل التاريخ */
+        .date-box {
+            background: #ff3b3b;
+            color: white;
+            padding: 12px 25px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            border-radius: 15px;
+            position: absolute;
+            top: -25px;
+            left: 50%;
+            transform: translateX(-50%);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        /* العنوان الرئيسي مع ظل متحرك */
+        .message h1 {
+            font-size: 3rem;
+            color: #ff3b3b;
+            margin-bottom: 25px;
+            animation: heartbeat 1.5s infinite alternate, floating 3s infinite ease-in-out;
+            text-shadow: 0 5px 15px rgba(255, 59, 59, 0.5);
+        }
+
+        @keyframes heartbeat {
+            from {
+                transform: scale(1);
+            }
+            to {
+                transform: scale(1.05);
+            }
+        }
+
+        @keyframes floating {
+            0% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-10px);
+            }
+            100% {
+                transform: translateY(0);
+            }
+        }
+
+        .message p {
+            font-size: 1.3rem;
+            color: #444;
+            line-height: 1.8;
+            animation: slideIn 2s ease-in-out;
+            text-align: right;
+            margin-bottom: 20px;
+        }
+
+        .buttons-container {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            flex-wrap: wrap;
+            margin-top: 25px;
+        }
+
+        .button {
+            padding: 15px 30px;
+            font-size: 1.1rem;
+            color: #fff;
+            background: linear-gradient(45deg, #ff6f61, #ff3b2f);
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: transform 0.2s ease, background 0.3s ease;
+            box-shadow: 0 5px 15px rgba(255, 59, 59, 0.3);
+        }
+
+        .button:hover {
+            background: linear-gradient(45deg, #ff3b2f, #ff6f61);
+            transform: scale(1.1);
+        }
+
+        .button:active {
+            transform: scale(0.95);
+        }
+
+        /* زر الموسيقى مع أيقونة متغيرة */
+        .music-button {
+            padding: 15px 30px;
+            font-size: 1.1rem;
+            color: white;
+            background: #ff6f61;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: background 0.3s ease, transform 0.2s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .music-button:hover {
+            background: #ff3b2f;
+            transform: scale(1.05);
+        }
+
+        .music-button:active {
+            transform: scale(0.95);
+        }
+
+        /* عداد التنازلي */
+        .countdown {
+            margin-top: 30px;
+            font-size: 1.5rem;
+            color: #ff3b3b;
+            font-weight: bold;
+            animation: fadeIn 2s ease-in-out;
+        }
+
+        .countdown span {
+            padding: 5px 10px;
+            background: rgba(255, 59, 59, 0.1);
+            border-radius: 10px;
+            margin: 0 5px;
+        }
+
+        /* القلوب المتساقطة */
+        .hearts-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+            overflow: hidden;
+        }
+
+        .heart {
+            position: absolute;
+            pointer-events: none;
+            animation: fall linear forwards;
+        }
+
+        @keyframes fall {
+            to {
+                transform: translate(var(--translate-x), calc(100vh + 50px)) rotate(var(--rotation));
+                opacity: 0;
+            }
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateY(-30px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .rose {
+            position: absolute;
+            right: -20px;
+            bottom: -20px;
+            font-size: 80px;
+            opacity: 0.6;
+            transform: rotate(15deg);
+        }
+
+        /* تحسين عرض الصفحة على الهواتف */
+        @media (max-width: 768px) {
+            .container {
+                padding: 30px 20px;
+                margin-top: 30px;
+            }
+            
+            .message h1 {
+                font-size: 2.5rem;
+            }
+            
+            .message p {
+                font-size: 1.1rem;
+            }
+            
+            .button, .music-button {
+                padding: 12px 20px;
+                font-size: 1rem;
+            }
+            
+            .countdown {
+                font-size: 1.2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- خلفية متحركة -->
+    <div class="background"></div>
+    
+    <!-- القلوب المتساقطة -->
+    <div class="hearts-container" id="hearts-container"></div>
+
+    <!-- الرسالة -->
+    <div class="container">
+        <!-- مستطيل التاريخ -->
+        <div class="date-box">1/March/2025</div>
+
+        <div class="message">
+            <h1>HBD Emy 🎂</h1>
+            <p>
+                النهاردة يوم مميز جداً.. عيد ميلادك الغالي وأول أيام شهر رمضان الكريم.. 
+                حاجة نادرة ومش هتتكرر كتير في العمر..
+            </p>
+            <p>
+                كل سنة وانتي طيبة يا إيمي، ووشك منور دايماً بضحكتك اللي بتميزك، 
+                وقلبك مليان فرح وسعادة، ويارب يكون يومك وسنتك كلها مليانة بكل الخير.
+            </p>
+            <p>
+                بحب هدوءك اللي بيملى المكان، والطاقة الحلوة اللي بتضيفيها على أي مكان توجدي فيه،
+                حاجة مميزة وسحر بسيط لكنه واضح، وكإنك بتضيفي لمسة خاصة بتخلي كل حاجة مختلفة.
+            </p>
+            <p>
+                أنا ساعات بلخبط في الكلام، مش لأني مش عارف أوصف،
+                لكن لأن وصفك صعب، وأي كلام هيكون أقل من الحقيقة.
+                ولو في يوم حصل مني حاجة تضايقك، قوليلي علطول،
+                لأن زعلك هو آخر شيء ممكن أتمناه.
+            </p>
+            <p>
+                رمضان كريم عليكي، وسنة سعيدة، وعيد ميلاد مليء بأجمل اللحظات، 
+                ويارب دايماً تكوني سعيدة ومبسوطة ومرتاحة البال.
+            </p>
+            
+            <div class="buttons-container">
+                <button class="button" onclick="fireConfetti()">✨ الألعاب النارية 🎉</button>
+                <button class="music-button" onclick="toggleMusic()">
+                    <span id="music-icon">🎵</span> تشغيل الأغنية
+                </button>
+                <button class="button" onclick="startHearts()">💗 أمطار قلوب 💗</button>
+            </div>
+            
+            <!-- عداد التنازلي -->
+            <div class="countdown" id="countdown">
+                <span id="days">00</span> يوم
+                <span id="hours">00</span> ساعة
+                <span id="minutes">00</span> دقيقة
+                <span id="seconds">00</span> ثانية
+            </div>
+        </div>
+        
+        <!-- وردة في الزاوية -->
+        <div class="rose">🌹</div>
+    </div>
+
+    <!-- الموسيقى - تم تغييرها للأغنية المطلوبة -->
+    <audio id="background-music" loop>
+        <source src="https://example.com/اغنية-شوفتك-يوميها.mp3" type="audio/mpeg">
+        المتصفح الخاص بك لا يدعم تشغيل الصوت.
+    </audio>
+
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.4.0/dist/confetti.browser.min.js"></script>
+    <script>
+        // تفعيل الألعاب النارية
+        function fireConfetti() {
+            confetti({
+                particleCount: 200,
+                spread: 80,
+                origin: { y: 0.6 },
+                colors: ['#ff3b3b', '#ff6f61', '#ff9a9e', '#ffccd2', '#FFD700', '#FFA500']
+            });
+            
+            // إصدار عدة دفعات من الألعاب النارية
+            setTimeout(() => {
+                confetti({
+                    particleCount: 150,
+                    angle: 60,
+                    spread: 70,
+                    origin: { x: 0 },
+                    colors: ['#ff3b3b', '#ff6f61', '#ff9a9e', '#ffccd2', '#FFD700']
+                });
+            }, 500);
+            
+            setTimeout(() => {
+                confetti({
+                    particleCount: 150,
+                    angle: 120,
+                    spread: 70,
+                    origin: { x: 1 },
+                    colors: ['#ff3b3b', '#ff6f61', '#ff9a9e', '#ffccd2', '#FFA500']
+                });
+            }, 1000);
+        }
+
+        // تشغيل وإيقاف الموسيقى مع تغيير الأيقونة
+        function toggleMusic() {
+            const music = document.getElementById('background-music');
+            const musicIcon = document.getElementById('music-icon');
+            if (music.paused) {
+                music.play();
+                musicIcon.textContent = '🎵';
+            } else {
+                music.pause();
+                musicIcon.textContent = '🔇';
+            }
+        }
+
+        // إضافة القلوب المتساقطة
+        function startHearts() {
+            const heartsContainer = document.getElementById('hearts-container');
+            const colors = ['#ff3b3b', '#ff6f61', '#ff9a9e', '#ffccd2', '#ff7eb3'];
+            const symbols = ['❤️', '💕', '💖', '💗', '💓', '💘'];
+            
+            // إنشاء 50 قلب
+            for (let i = 0; i < 50; i++) {
+                setTimeout(() => {
+                    const heart = document.createElement('div');
+                    heart.classList.add('heart');
+                    
+                    // الشكل والحجم
+                    const symbol = symbols[Math.floor(Math.random() * symbols.length)];
+                    heart.innerHTML = symbol;
+                    heart.style.fontSize = Math.floor(Math.random() * 20 + 15) + 'px';
+                    
+                    // الموضع والحركة
+                    const startX = Math.random() * window.innerWidth;
+                    const translateX = Math.random() * 100 - 50; // بين -50 و 50
+                    const rotation = Math.random() * 360;
+                    const duration = Math.random() * 3 + 3; // بين 3 و 6 ثوانية
+                    
+                    heart.style.left = startX + 'px';
+                    heart.style.top = '-50px';
+                    heart.style.setProperty('--translate-x', translateX + 'px');
+                    heart.style.setProperty('--rotation', rotation + 'deg');
+                    heart.style.animationDuration = duration + 's';
+                    
+                    heartsContainer.appendChild(heart);
+                    
+                    // إزالة القلب بعد انتهاء الحركة
+                    setTimeout(() => {
+                        heart.remove();
+                    }, duration * 1000);
+                    
+                }, i * 100); // تأخير بين كل قلب والآخر
+            }
+        }
+
+        // عداد التنازلي
+        function updateCountdown() {
+            const targetDate = new Date('March 1, 2025 00:00:00').getTime();
+            const now = new Date().getTime();
+            const timeLeft = targetDate - now;
+
+            if (timeLeft < 0) {
+                document.getElementById('countdown').innerHTML = "وصلنا لـ ١ مارس! 🎉";
+                return;
+            }
+
+            const days = Math.floor(timeLeft / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((timeLeft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
+
+            document.getElementById('days').innerText = days.toString().padStart(2, '0');
+            document.getElementById('hours').innerText = hours.toString().padStart(2, '0');
+            document.getElementById('minutes').innerText = minutes.toString().padStart(2, '0');
+            document.getElementById('seconds').innerText = seconds.toString().padStart(2, '0');
+        }
+
+        // تحديث العداد كل ثانية
+        setInterval(updateCountdown, 1000);
+        updateCountdown();
+
+        // تشغيل الألعاب النارية عند تحميل الصفحة
+        document.addEventListener('DOMContentLoaded', () => {
+            fireConfetti();
+            
+            // إعداد تساقط القلوب التلقائي بعد 3 ثوانٍ
+            setTimeout(() => {
+                startHearts();
+            }, 3000);
+        });
+    </script>
+</body>
+</html>
